@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<azone>
+    <rzone name="R7SA6W1CEDZDD.rzone"/>
+    <partition>
+        <peripheral name="ADC_W.CM33" security=""/>
+    </partition>
+</azone>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<raConfiguration version="12">
+  <generalSettings>
+    <option key="#Board#" value="board.rrq61xxx_evb"/>
+    <option key="CPU" value="RA6W1"/>
+    <option key="Core" value="CM33"/>
+    <option key="#TargetName#" value="R7SA6W1CEDZDD"/>
+    <option key="#TargetARCHITECTURE#" value="cortex-m33"/>
+    <option key="#DeviceCommand#" value="R7SA6W1CE"/>
+    <option key="#RTOS#" value="rtos.awsfreertos"/>
+    <option key="#pinconfiguration#" value="RTKRRQ61000C.pincfg"/>
+    <option key="#FSPVersion#" value="2.1.0"/>
+    <option key="#ConfigurationFragments#" value="Renesas##BSP##Board##rrq61xxx_evb##"/>
+    <option key="#SELECTED_TOOLCHAIN#" value="gcc-arm-embedded"/>
+    <option key="#ToolchainVersion#" value="13.3.1.arm-13-24"/>
+  </generalSettings>
+  <raBspConfiguration/>
+  <raClockConfiguration>
+    <node id="board.clock.xtal40m.freq" option="board.clock.xtal40m.freq.40m"/>
+    <node id="board.clock.xtal.freq" option="board.clock.xtal.freq.32k"/>
+    <node id="board.clock.rcx.freq" option="board.clock.rcx.freq.32k"/>
+    <node id="board.clock.xtal40m.source" option="board.clock.xtal40m.source.enabled"/>
+    <node id="board.clock.xtal.source" option="board.clock.xtal.source.enabled"/>
+    <node id="board.clock.rcx.source" option="board.clock.rcx.source.enabled"/>
+    <node id="board.clock.pll.source" option="board.clock.pll.source.xtal40m"/>
+    <node id="board.clock.pll.mul" option="board.clock.pll.mul.12"/>
+    <node id="board.clock.lp_clk.source" option="board.clock.lp_clk.source.xtal32k"/>
+    <node id="board.clock.pll_sys.source" option="board.clock.pll_sys.source.pll"/>
+    <node id="board.clock.pll_sys.mul" option="board.clock.pll_sys.mul.1_3"/>
+    <node id="board.clock.sys_clk.source" option="board.clock.sys_clk.source.pll_sys"/>
+    <node id="board.clock.sys_clk.display" option="board.clock.sys_clk.display.value"/>
+    <node id="board.clock.hclk.div" option="board.clock.hclk.div.1"/>
+    <node id="board.clock.oqspiclk.div" option="board.clock.oqspiclk.div.2"/>
+    <node id="board.clock.qspiclk.div" option="board.clock.qspiclk.div.1"/>
+    <node id="board.clock.pll_spi.source" option="board.clock.pll_spi.source.disabled"/>
+    <node id="board.clock.pll_spi.mul" option="board.clock.pll_spi.mul.1_6"/>
+    <node id="board.clock.spi_clk.source" option="board.clock.spi_clk.source.xtal_sys"/>
+    <node id="board.clock.spi_clk.display" option="board.clock.spi_clk.display.value"/>
+    <node id="board.clock.spi1clk.display" option="board.clock.spi1clk.display.value"/>
+    <node id="board.clock.spi2clk.display" option="board.clock.spi2clk.display.value"/>
+    <node id="board.clock.pll_peri.source" option="board.clock.pll_peri.source.pll"/>
+    <node id="board.clock.pll_peri.div" option="board.clock.pll_peri.div.6"/>
+    <node id="board.clock.peri_clk.source" option="board.clock.peri_clk.source.pll_peri"/>
+    <node id="board.clock.peri_clk.display" option="board.clock.peri_clk.display.value"/>
+    <node id="board.clock.i2c1.div" option="board.clock.i2c1.div.1"/>
+    <node id="board.clock.i2c2.div" option="board.clock.i2c2.div.1"/>
+    <node id="board.clock.i2c1clk.display" option="board.clock.i2c1clk.display.value"/>
+    <node id="board.clock.i2c2clk.display" option="board.clock.i2c2clk.display.value"/>
+    <node id="board.clock.uart1clk.display" option="board.clock.uart1clk.display.value"/>
+    <node id="board.clock.uart2clk.display" option="board.clock.uart2clk.display.value"/>
+    <node id="board.clock.uart3clk.display" option="board.clock.uart3clk.display.value"/>
+    <node id="board.clock.rtc_clk.display" option="board.clock.rtc_clk.display.value"/>
+    <node id="board.clock.wdog.div" option="board.clock.wdog.div.320"/>
+    <node id="board.clock.wdog.div.display" option="board.clock.wdog.div.display.value"/>
+  </raClockConfiguration>
+  <raPinConfiguration>
+    <pincfg active="true" name="" symbol="">
+      <configSetting altId="cgc.xtal32k_m.p002" configurationId="cgc.xtal32k_m" peripheral="CGC"/>
+      <configSetting altId="cgc.xtal32k_p.p003" configurationId="cgc.xtal32k_p" peripheral="CGC"/>
+      <configSetting altId="ext.ext_intr0.p011" configurationId="ext.ext_intr0" isUsedByDriver="true" peripheral="EXT"/>
+      <configSetting altId="ext.ext_intr1.p013" configurationId="ext.ext_intr1" isUsedByDriver="true" peripheral="EXT"/>
+      <configSetting altId="ext.ext_intr2.p012" configurationId="ext.ext_intr2" isUsedByDriver="true" peripheral="EXT"/>
+      <configSetting altId="ext.ext_intr3.p006" configurationId="ext.ext_intr3" isUsedByDriver="true" peripheral="EXT"/>
+      <configSetting altId="i2c1.i2c1_scl.p010" configurationId="i2c1.i2c1_scl" isUsedByDriver="true" peripheral="I2C1"/>
+      <configSetting altId="i2c1.i2c1_sda.p007" configurationId="i2c1.i2c1_sda" isUsedByDriver="true" peripheral="I2C1"/>
+      <configSetting altId="oqspi.oqspi_clk.p108" configurationId="oqspi.oqspi_clk" isUsedByDriver="true" peripheral="OQSPI"/>
+      <configSetting altId="oqspi.oqspi_cs.p109" configurationId="oqspi.oqspi_cs" isUsedByDriver="true" peripheral="OQSPI"/>
+      <configSetting altId="oqspi.oqspi_d0.p104" configurationId="oqspi.oqspi_d0" isUsedByDriver="true" peripheral="OQSPI"/>
+      <configSetting altId="oqspi.oqspi_d1.p105" configurationId="oqspi.oqspi_d1" isUsedByDriver="true" peripheral="OQSPI"/>
+      <configSetting altId="oqspi.oqspi_d2.p106" configurationId="oqspi.oqspi_d2" isUsedByDriver="true" peripheral="OQSPI"/>
+      <configSetting altId="oqspi.oqspi_d3.p107" configurationId="oqspi.oqspi_d3" isUsedByDriver="true" peripheral="OQSPI"/>
+      <configSetting altId="p000.dirctl.dirctl_in" configurationId="p000.dirctl"/>
+      <configSetting altId="p000.gpio_mode.gpio_mode_peripheral" configurationId="p000.gpio_mode"/>
+      <configSetting altId="p000.sr.sr.fast" configurationId="p000.sr"/>
+      <configSetting altId="p001.dirctl.dirctl_out" configurationId="p001.dirctl"/>
+      <configSetting altId="p001.gpio_mode.gpio_mode_peripheral" configurationId="p001.gpio_mode"/>
+      <configSetting altId="p001.sr.sr.fast" configurationId="p001.sr"/>
+      <configSetting altId="p002.gpio_mode.gpio_mode_an" configurationId="p002.gpio_mode"/>
+      <configSetting altId="p003.gpio_mode.gpio_mode_an" configurationId="p003.gpio_mode"/>
+      <configSetting altId="p004.dirctl.dirctl_in" configurationId="p004.dirctl"/>
+      <configSetting altId="p004.gpio_mode.gpio_mode_peripheral" configurationId="p004.gpio_mode"/>
+      <configSetting altId="p004.sr.sr.fast" configurationId="p004.sr"/>
+      <configSetting altId="p005.dirctl.dirctl_out" configurationId="p005.dirctl"/>
+      <configSetting altId="p005.gpio_mode.gpio_mode_peripheral" configurationId="p005.gpio_mode"/>
+      <configSetting altId="p005.sr.sr.fast" configurationId="p005.sr"/>
+      <configSetting altId="p006.dirctl.dirctl_in" configurationId="p006.dirctl"/>
+      <configSetting altId="p006.gpio_mode.gpio_mode_peripheral" configurationId="p006.gpio_mode"/>
+      <configSetting altId="p006.sr.sr.fast" configurationId="p006.sr"/>
+      <configSetting altId="p007.dirctl.dirctl_in" configurationId="p007.dirctl"/>
+      <configSetting altId="p007.gpio_mode.gpio_mode_peripheral" configurationId="p007.gpio_mode"/>
+      <configSetting altId="p007.sr.sr.fast" configurationId="p007.sr"/>
+      <configSetting altId="p008.dirctl.dirctl_out" configurationId="p008.dirctl"/>
+      <configSetting altId="p008.gpio_mode.gpio_mode_peripheral" configurationId="p008.gpio_mode"/>
+      <configSetting altId="p008.sr.sr.fast" configurationId="p008.sr"/>
+      <configSetting altId="p009.dirctl.dirctl_in" configurationId="p009.dirctl"/>
+      <configSetting altId="p009.gpio_mode.gpio_mode_peripheral" configurationId="p009.gpio_mode"/>
+      <configSetting altId="p009.sr.sr.fast" configurationId="p009.sr"/>
+      <configSetting altId="p010.dirctl.dirctl_in" configurationId="p010.dirctl"/>
+      <configSetting altId="p010.gpio_mode.gpio_mode_peripheral" configurationId="p010.gpio_mode"/>
+      <configSetting altId="p010.sr.sr.fast" configurationId="p010.sr"/>
+      <configSetting altId="p011.dirctl.dirctl_in" configurationId="p011.dirctl"/>
+      <configSetting altId="p011.gpio_mode.gpio_mode_peripheral" configurationId="p011.gpio_mode"/>
+      <configSetting altId="p011.gpio_pupd.gpio_pupd_ip_up" configurationId="p011.gpio_pupd"/>
+      <configSetting altId="p011.sr.sr.fast" configurationId="p011.sr"/>
+      <configSetting altId="p012.dirctl.dirctl_in" configurationId="p012.dirctl"/>
+      <configSetting altId="p012.gpio_mode.gpio_mode_peripheral" configurationId="p012.gpio_mode"/>
+      <configSetting altId="p012.sr.sr.fast" configurationId="p012.sr"/>
+      <configSetting altId="p013.dirctl.dirctl_in" configurationId="p013.dirctl"/>
+      <configSetting altId="p013.gpio_mode.gpio_mode_peripheral" configurationId="p013.gpio_mode"/>
+      <configSetting altId="p013.sr.sr.fast" configurationId="p013.sr"/>
+      <configSetting altId="p104.dirctl.dirctl_in" configurationId="p104.dirctl"/>
+      <configSetting altId="p104.gpio_mode.gpio_mode_peripheral" configurationId="p104.gpio_mode"/>
+      <configSetting altId="p104.sr.sr.fast" configurationId="p104.sr"/>
+      <configSetting altId="p105.dirctl.dirctl_in" configurationId="p105.dirctl"/>
+      <configSetting altId="p105.gpio_mode.gpio_mode_peripheral" configurationId="p105.gpio_mode"/>
+      <configSetting altId="p105.sr.sr.fast" configurationId="p105.sr"/>
+      <configSetting altId="p106.dirctl.dirctl_in" configurationId="p106.dirctl"/>
+      <configSetting altId="p106.gpio_mode.gpio_mode_peripheral" configurationId="p106.gpio_mode"/>
+      <configSetting altId="p106.sr.sr.fast" configurationId="p106.sr"/>
+      <configSetting altId="p107.dirctl.dirctl_in" configurationId="p107.dirctl"/>
+      <configSetting altId="p107.gpio_mode.gpio_mode_peripheral" configurationId="p107.gpio_mode"/>
+      <configSetting altId="p107.sr.sr.fast" configurationId="p107.sr"/>
+      <configSetting altId="p108.dirctl.dirctl_out" configurationId="p108.dirctl"/>
+      <configSetting altId="p108.gpio_mode.gpio_mode_peripheral" configurationId="p108.gpio_mode"/>
+      <configSetting altId="p108.sr.sr.fast" configurationId="p108.sr"/>
+      <configSetting altId="p109.dirctl.dirctl_out" configurationId="p109.dirctl"/>
+      <configSetting altId="p109.gpio_mode.gpio_mode_peripheral" configurationId="p109.gpio_mode"/>
+      <configSetting altId="p109.sr.sr.fast" configurationId="p109.sr"/>
+      <configSetting altId="p114.output.low" configurationId="p114"/>
+      <configSetting altId="p114.gpio_mode.gpio_mode_out.low" configurationId="p114.gpio_mode"/>
+      <configSetting altId="p116.dirctl.dirctl_in" configurationId="p116.dirctl"/>
+      <configSetting altId="p116.gpio_mode.gpio_mode_peripheral" configurationId="p116.gpio_mode"/>
+      <configSetting altId="p117.dirctl.dirctl_in" configurationId="p117.dirctl"/>
+      <configSetting altId="p117.gpio_mode.gpio_mode_peripheral" configurationId="p117.gpio_mode"/>
+      <configSetting altId="swd.swclk.p116" configurationId="swd.swclk" peripheral="SWD"/>
+      <configSetting altId="swd.swdio.p117" configurationId="swd.swdio" peripheral="SWD"/>
+      <configSetting altId="uart1.uart1_rx.p000" configurationId="uart1.uart1_rx" isUsedByDriver="true" peripheral="UART1"/>
+      <configSetting altId="uart1.uart1_tx.p001" configurationId="uart1.uart1_tx" isUsedByDriver="true" peripheral="UART1"/>
+      <configSetting altId="uart2.uart2_cts.p009" configurationId="uart2.uart2_cts" isUsedByDriver="true" peripheral="UART2"/>
+      <configSetting altId="uart2.uart2_rts.p008" configurationId="uart2.uart2_rts" isUsedByDriver="true" peripheral="UART2"/>
+      <configSetting altId="uart2.uart2_rx.p004" configurationId="uart2.uart2_rx" isUsedByDriver="true" peripheral="UART2"/>
+      <configSetting altId="uart2.uart2_tx.p005" configurationId="uart2.uart2_tx" isUsedByDriver="true" peripheral="UART2"/>
+    </pincfg>
+  </raPinConfiguration>
+</raConfiguration>
