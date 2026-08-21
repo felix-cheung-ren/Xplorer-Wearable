@@ -136,10 +136,10 @@
       <configSetting altId="swd.swdio.p117" configurationId="swd.swdio" peripheral="SWD"/>
       <configSetting altId="uart1.uart1_rx.p000" configurationId="uart1.uart1_rx" isUsedByDriver="true" peripheral="UART1"/>
       <configSetting altId="uart1.uart1_tx.p001" configurationId="uart1.uart1_tx" isUsedByDriver="true" peripheral="UART1"/>
-      <configSetting altId="uart2.uart2_cts.p009" configurationId="uart2.uart2_cts" isUsedByDriver="true" peripheral="UART2"/>
-      <configSetting altId="uart2.uart2_rts.p008" configurationId="uart2.uart2_rts" isUsedByDriver="true" peripheral="UART2"/>
-      <configSetting altId="uart2.uart2_rx.p004" configurationId="uart2.uart2_rx" isUsedByDriver="true" peripheral="UART2"/>
-      <configSetting altId="uart2.uart2_tx.p005" configurationId="uart2.uart2_tx" isUsedByDriver="true" peripheral="UART2"/>
+      <configSetting altId="uart2.uart2_cts.p009" configurationId="uart2.uart2_cts" peripheral="UART2"/>
+      <configSetting altId="uart2.uart2_rts.p008" configurationId="uart2.uart2_rts" peripheral="UART2"/>
+      <configSetting altId="uart2.uart2_rx.p004" configurationId="uart2.uart2_rx" peripheral="UART2"/>
+      <configSetting altId="uart2.uart2_tx.p005" configurationId="uart2.uart2_tx" peripheral="UART2"/>
     </pincfg>
   </raPinConfiguration>
 </raConfiguration>

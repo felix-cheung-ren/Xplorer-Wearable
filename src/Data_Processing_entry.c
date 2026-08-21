@@ -26,7 +26,7 @@ void Data_Processing_entry(void *pvParameters)
     g_data_processing_task_handle = xTaskGetCurrentTaskHandle();
 
     /* Wait a bit for server setup */
-    vTaskDelay(pdMS_TO_TICKS(6000));
+    vTaskDelay(pdMS_TO_TICKS(10000));
 
     /* Unified open for the I2C bus */
     err = R_I2C_MASTER_W_Open(&g_i2c_master0_ctrl, &g_i2c_master0_cfg);

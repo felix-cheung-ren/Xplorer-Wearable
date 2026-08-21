@@ -1488,3 +1488,7 @@ FSP Configuration
     Type: Mutex
     Memory Allocation: Static
     
+  Object "g_i2c_complete_sem Binary Semaphore"
+    Symbol: g_i2c_complete_sem
+    Memory Allocation: Static
+    

@@ -5,6 +5,8 @@
 #include "bsp_api.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
+#include "FreeRTOS.h"
+#include "semphr.h"
 #include "r_ext_irq_w.h"
 #include "r_external_irq_api.h"
 #include "r_tim_w.h"
@@ -215,6 +217,7 @@ extern const ioport_instance_t g_gpio_w;
 /* GPIO_W control structure. */
 extern gpio_w_instance_ctrl_t g_gpio_w_ctrl;
 extern SemaphoreHandle_t g_i2c_mutex;
+extern SemaphoreHandle_t g_i2c_complete_sem;
 void g_common_init(void);
 FSP_FOOTER
 #endif /* COMMON_DATA_H_ */

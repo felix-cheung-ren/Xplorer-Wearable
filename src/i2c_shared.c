@@ -18,5 +18,14 @@ volatile i2c_master_event_t g_i2c_callback_event = I2C_MASTER_EVENT_ABORTED;
  **********************************************************************************************************************/
 void i2c_master0_callback(i2c_master_callback_args_t *p_args)
 {
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
+	/* Store I2C transaction status */
     g_i2c_callback_event = p_args->event;
+
+    /* Unblock and check priorities */
+    xSemaphoreGiveFromISR(g_i2c_complete_sem, &xHigherPriorityTaskWoken);
+
+    /* Switch to the highest priority task * */
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }

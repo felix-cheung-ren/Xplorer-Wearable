@@ -659,6 +659,10 @@
       <property id="rtos.awsfreertos.object.mutex.type" value="rtos.awsfreertos.object.mutex.type.mutex"/>
       <property id="rtos.awsfreertos.object.mutex.allocation" value="rtos.awsfreertos.object.mutex.allocation.static"/>
     </object>
+    <object id="rtos.awsfreertos.object.binary_semaphore.1215635123">
+      <property id="rtos.awsfreertos.object.binary_semaphore.symbol" value="g_i2c_complete_sem"/>
+      <property id="rtos.awsfreertos.object.binary_semaphore.allocation" value="rtos.awsfreertos.object.binary_semaphore.allocation.static"/>
+    </object>
     <context id="_hal.0">
       <stack module="module.driver.ioport_on_gpio_w.0"/>
       <stack module="module.middleware.rm_freertos_port.0"/>

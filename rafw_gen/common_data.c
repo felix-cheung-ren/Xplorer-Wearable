@@ -843,6 +843,11 @@ SemaphoreHandle_t g_i2c_mutex;
 StaticSemaphore_t g_i2c_mutex_memory;
 #endif
 void rtos_startup_err_callback(void *p_instance, void *p_data);
+SemaphoreHandle_t g_i2c_complete_sem;
+#if 1
+StaticSemaphore_t g_i2c_complete_sem_memory;
+#endif
+void rtos_startup_err_callback(void *p_instance, void *p_data);
 void g_common_init(void) {
 	g_i2c_mutex =
 #if 0
@@ -860,5 +865,14 @@ void g_common_init(void) {
 #endif
 	if (NULL == g_i2c_mutex) {
 		rtos_startup_err_callback(g_i2c_mutex, 0);
+	}
+	g_i2c_complete_sem =
+#if 1
+			xSemaphoreCreateBinaryStatic(&g_i2c_complete_sem_memory);
+#else
+                xSemaphoreCreateBinary();
+                #endif
+	if (NULL == g_i2c_complete_sem) {
+		rtos_startup_err_callback(g_i2c_complete_sem, 0);
 	}
 }

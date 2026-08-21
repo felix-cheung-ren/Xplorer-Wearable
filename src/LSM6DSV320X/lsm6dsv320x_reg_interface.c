@@ -211,7 +211,6 @@ int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t 
 
     (void)handle;
     fsp_err_t err;
-    uint32_t timeout_ms;
     uint8_t write_buf[LSM_MAX_WRITE_LEN + 1];
 
     if (len > LSM_MAX_WRITE_LEN) { xSemaphoreGive(g_i2c_mutex); return -1; }
@@ -226,24 +225,27 @@ int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t 
 
     /* Write register address + data */
     g_i2c_callback_event = I2C_MASTER_EVENT_ABORTED;
-    timeout_ms = I2C_TRANSACTION_BUSY_DELAY;
+    xSemaphoreTake(g_i2c_complete_sem, 0); // clear any leftover semaphore
 
     err = R_I2C_MASTER_W_Write(&g_i2c_master0_ctrl, write_buf, len + 1, false);
     if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
 
     /* Wait/block until write completes */
-    while ((I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event) && timeout_ms)
+    if (xSemaphoreTake(g_i2c_complete_sem, pdMS_TO_TICKS(I2C_TRANSACTION_BUSY_DELAY)) != pdTRUE)
     {
-        R_BSP_SoftwareDelay(1U, BSP_DELAY_UNITS_MILLISECONDS);
-        timeout_ms--;
+        xSemaphoreGive(g_i2c_mutex);
+        return -1;
     }
-    if (I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event)
+    {
+        xSemaphoreGive(g_i2c_mutex);
+        return -1;
+    }
 
     xSemaphoreGive(g_i2c_mutex);
 
     return 0;
 }
-
 
 /**
  * @brief  Read generic device register (platform dependent)
@@ -261,7 +263,6 @@ int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len)
 
     (void)handle;
     fsp_err_t err;
-    uint32_t timeout_ms;
 
     /* Set slave address for LSM6DSV320X */
     err = R_I2C_MASTER_W_SlaveAddressSet(&g_i2c_master0_ctrl, (LSM6DSV320X_I2C_ADD_L >> 1), I2C_MASTER_ADDR_MODE_7BIT);
@@ -269,39 +270,46 @@ int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len)
 
     /* Write register address to read from */
     g_i2c_callback_event = I2C_MASTER_EVENT_ABORTED;
-    timeout_ms = I2C_TRANSACTION_BUSY_DELAY;
+    xSemaphoreTake(g_i2c_complete_sem, 0); // clear any leftover semaphore
 
     err = R_I2C_MASTER_W_Write(&g_i2c_master0_ctrl, &reg, 1, true);
     if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
 
     /* Wait/block until write completes */
-    while ((I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event) && timeout_ms)
+    if (xSemaphoreTake(g_i2c_complete_sem, pdMS_TO_TICKS(I2C_TRANSACTION_BUSY_DELAY)) != pdTRUE)
     {
-        R_BSP_SoftwareDelay(1U, BSP_DELAY_UNITS_MILLISECONDS);
-        timeout_ms--;
+        xSemaphoreGive(g_i2c_mutex);
+        return -1;
     }
-    if (I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event)
+    {
+        xSemaphoreGive(g_i2c_mutex);
+        return -1;
+    }
 
     /* Read data */
     g_i2c_callback_event = I2C_MASTER_EVENT_ABORTED;
-    timeout_ms = I2C_TRANSACTION_BUSY_DELAY;
+    xSemaphoreTake(g_i2c_complete_sem, 0); // clear any leftover semaphore
 
     err = R_I2C_MASTER_W_Read(&g_i2c_master0_ctrl, bufp, len, false);
     if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
 
     /* Wait/block until read completes */
-    while ((I2C_MASTER_EVENT_RX_COMPLETE != g_i2c_callback_event) && timeout_ms)
+    if (xSemaphoreTake(g_i2c_complete_sem, pdMS_TO_TICKS(I2C_TRANSACTION_BUSY_DELAY)) != pdTRUE)
     {
-        R_BSP_SoftwareDelay(1U, BSP_DELAY_UNITS_MILLISECONDS);
-        timeout_ms--;
+        xSemaphoreGive(g_i2c_mutex);
+        return -1;
     }
-    if (I2C_MASTER_EVENT_RX_COMPLETE != g_i2c_callback_event) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (I2C_MASTER_EVENT_RX_COMPLETE != g_i2c_callback_event)
+    {
+        xSemaphoreGive(g_i2c_mutex);
+        return -1;
+    }
 
     xSemaphoreGive(g_i2c_mutex);
 
     return 0;
 }
-
 
 /**
  * @brief  platform specific delay (platform dependent)
