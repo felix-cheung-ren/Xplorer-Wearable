@@ -622,7 +622,7 @@
       <property id="module.driver.i2c_master_w.enable_dma_bursts_rx" value="module.driver.i2c_master_w.enable_dma_bursts_rx.enabled"/>
       <property id="module.driver.i2c_master_w.p_callback" value="i2c_master0_callback"/>
       <property id="module.driver.i2c_master_w.ipl" value="_disabled"/>
-      <property id="module.driver.i2c_master_w.gen_ipl" value="board.icu.common.irq.priority12"/>
+      <property id="module.driver.i2c_master_w.gen_ipl" value="board.icu.common.irq.priority4"/>
     </module>
     <module id="module.driver.i2c_on_i2c_master_w.1313893336">
       <property id="module.driver.i2c_master_w.name" value="g_i2c_master0"/>
@@ -645,14 +645,14 @@
       <property id="module.driver.external_irq.channel" value="0"/>
       <property id="module.driver.external_irq.trigger" value="module.driver.external_irq.trigger.trig_falling"/>
       <property id="module.driver.external_irq.p_callback" value="max30102_irq_callback"/>
-      <property id="module.driver.external_irq.ipl" value="board.icu.common.irq.priority12"/>
+      <property id="module.driver.external_irq.ipl" value="board.icu.common.irq.priority4"/>
     </module>
     <module id="module.driver.external_irq_on_ext_irq_w.917257490">
       <property id="module.driver.external_irq.name" value="g_external_irq3"/>
       <property id="module.driver.external_irq.channel" value="3"/>
       <property id="module.driver.external_irq.trigger" value="module.driver.external_irq.trigger.trig_rising"/>
       <property id="module.driver.external_irq.p_callback" value="lsm_irq_callback"/>
-      <property id="module.driver.external_irq.ipl" value="board.icu.common.irq.priority12"/>
+      <property id="module.driver.external_irq.ipl" value="board.icu.common.irq.priority4"/>
     </module>
     <object id="rtos.awsfreertos.object.mutex.145743790">
       <property id="rtos.awsfreertos.object.mutex.symbol" value="g_i2c_mutex"/>
@@ -1417,14 +1417,8 @@
       <configSetting altId="p002.gpio_mode.gpio_mode_an" configurationId="p002.gpio_mode"/>
       <configSetting altId="p003.cgc.xtal32k_p" configurationId="p003"/>
       <configSetting altId="p003.gpio_mode.gpio_mode_an" configurationId="p003.gpio_mode"/>
-      <configSetting altId="p004.uart2.uart2_rx" configurationId="p004"/>
-      <configSetting altId="p004.dirctl.dirctl_in" configurationId="p004.dirctl"/>
-      <configSetting altId="p004.gpio_mode.gpio_mode_peripheral" configurationId="p004.gpio_mode"/>
-      <configSetting altId="p004.sr.sr.fast" configurationId="p004.sr"/>
-      <configSetting altId="p005.uart2.uart2_tx" configurationId="p005"/>
-      <configSetting altId="p005.dirctl.dirctl_out" configurationId="p005.dirctl"/>
-      <configSetting altId="p005.gpio_mode.gpio_mode_peripheral" configurationId="p005.gpio_mode"/>
-      <configSetting altId="p005.sr.sr.fast" configurationId="p005.sr"/>
+      <configSetting altId="p005.output.high" configurationId="p005"/>
+      <configSetting altId="p005.gpio_mode.gpio_mode_out.high" configurationId="p005.gpio_mode"/>
       <configSetting altId="p006.ext.ext_intr3" configurationId="p006"/>
       <configSetting altId="p006.dirctl.dirctl_in" configurationId="p006.dirctl"/>
       <configSetting altId="p006.gpio_mode.gpio_mode_peripheral" configurationId="p006.gpio_mode"/>
@@ -1433,14 +1427,6 @@
       <configSetting altId="p007.dirctl.dirctl_in" configurationId="p007.dirctl"/>
       <configSetting altId="p007.gpio_mode.gpio_mode_peripheral" configurationId="p007.gpio_mode"/>
       <configSetting altId="p007.sr.sr.fast" configurationId="p007.sr"/>
-      <configSetting altId="p008.uart2.uart2_rts" configurationId="p008"/>
-      <configSetting altId="p008.dirctl.dirctl_out" configurationId="p008.dirctl"/>
-      <configSetting altId="p008.gpio_mode.gpio_mode_peripheral" configurationId="p008.gpio_mode"/>
-      <configSetting altId="p008.sr.sr.fast" configurationId="p008.sr"/>
-      <configSetting altId="p009.uart2.uart2_cts" configurationId="p009"/>
-      <configSetting altId="p009.dirctl.dirctl_in" configurationId="p009.dirctl"/>
-      <configSetting altId="p009.gpio_mode.gpio_mode_peripheral" configurationId="p009.gpio_mode"/>
-      <configSetting altId="p009.sr.sr.fast" configurationId="p009.sr"/>
       <configSetting altId="p010.i2c1.i2c1_scl" configurationId="p010"/>
       <configSetting altId="p010.dirctl.dirctl_in" configurationId="p010.dirctl"/>
       <configSetting altId="p010.gpio_mode.gpio_mode_peripheral" configurationId="p010.gpio_mode"/>
@@ -1458,6 +1444,14 @@
       <configSetting altId="p013.dirctl.dirctl_in" configurationId="p013.dirctl"/>
       <configSetting altId="p013.gpio_mode.gpio_mode_peripheral" configurationId="p013.gpio_mode"/>
       <configSetting altId="p013.sr.sr.fast" configurationId="p013.sr"/>
+      <configSetting altId="p101.uart3.uart3_tx" configurationId="p101"/>
+      <configSetting altId="p101.dirctl.dirctl_out" configurationId="p101.dirctl"/>
+      <configSetting altId="p101.gpio_mode.gpio_mode_peripheral" configurationId="p101.gpio_mode"/>
+      <configSetting altId="p101.sr.sr.fast" configurationId="p101.sr"/>
+      <configSetting altId="p102.uart3.uart3_rx" configurationId="p102"/>
+      <configSetting altId="p102.dirctl.dirctl_in" configurationId="p102.dirctl"/>
+      <configSetting altId="p102.gpio_mode.gpio_mode_peripheral" configurationId="p102.gpio_mode"/>
+      <configSetting altId="p102.sr.sr.fast" configurationId="p102.sr"/>
       <configSetting altId="p104.oqspi.oqspi_d0" configurationId="p104"/>
       <configSetting altId="p104.dirctl.dirctl_in" configurationId="p104.dirctl"/>
       <configSetting altId="p104.gpio_mode.gpio_mode_peripheral" configurationId="p104.gpio_mode"/>
@@ -1496,11 +1490,9 @@
       <configSetting altId="uart1.mode.asynchronousuart.free" configurationId="uart1.mode"/>
       <configSetting altId="uart1.uart1_rx.p000" configurationId="uart1.uart1_rx"/>
       <configSetting altId="uart1.uart1_tx.p001" configurationId="uart1.uart1_tx"/>
-      <configSetting altId="uart2.mode.asynchronousuart.free" configurationId="uart2.mode"/>
-      <configSetting altId="uart2.uart2_cts.p009" configurationId="uart2.uart2_cts"/>
-      <configSetting altId="uart2.uart2_rts.p008" configurationId="uart2.uart2_rts"/>
-      <configSetting altId="uart2.uart2_rx.p004" configurationId="uart2.uart2_rx"/>
-      <configSetting altId="uart2.uart2_tx.p005" configurationId="uart2.uart2_tx"/>
+      <configSetting altId="uart3.mode.asynchronousuart.free" configurationId="uart3.mode"/>
+      <configSetting altId="uart3.uart3_rx.p102" configurationId="uart3.uart3_rx"/>
+      <configSetting altId="uart3.uart3_tx.p101" configurationId="uart3.uart3_tx"/>
     </pincfg>
     <pincfg active="false" name="R7SA6W1CEDZDD.pincfg" selected="false" symbol="">
       <configSetting altId="p116.swd.swclk" configurationId="p116"/>

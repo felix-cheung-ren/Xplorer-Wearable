@@ -38,7 +38,7 @@ const i2c_master_w_extended_cfg_t g_i2c_master0_extend =
 #else
 				.gen_irq = FSP_INVALID_VECTOR,
 #endif
-				.gen_ipl = (12),
+				.gen_ipl = (4),
 				/* Actual calculated bitrate: 99975. Actual calculated duty cycle: 50%. Frequency of the selected clock source: 80000000. */.clock_settings.scl_lcnt =
 						400, .clock_settings.scl_hcnt = 393, };
 const i2c_master_cfg_t g_i2c_master0_cfg = { .channel = 1

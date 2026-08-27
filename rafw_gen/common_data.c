@@ -10,7 +10,7 @@ ext_irq_w_extended_cfg_t g_external_irq3_ext_cfg = {
 ext_irq_w_instance_ctrl_t g_external_irq3_ctrl;
 const external_irq_cfg_t g_external_irq3_cfg = { .channel = 3, .trigger =
 		EXTERNAL_IRQ_TRIG_RISING, .p_callback = lsm_irq_callback, .p_context =
-		NULL, .p_extend = &g_external_irq3_ext_cfg, .ipl = (12), .irq =
+		NULL, .p_extend = &g_external_irq3_ext_cfg, .ipl = (4), .irq =
 		FSP_INVALID_VECTOR, };
 /* Instance structure to use this module. */
 const external_irq_instance_t g_external_irq3 = { .p_ctrl =
@@ -25,7 +25,7 @@ ext_irq_w_extended_cfg_t g_external_irq0_ext_cfg = {
 ext_irq_w_instance_ctrl_t g_external_irq0_ctrl;
 const external_irq_cfg_t g_external_irq0_cfg = { .channel = 0, .trigger =
 		EXTERNAL_IRQ_TRIG_FALLING, .p_callback = max30102_irq_callback,
-		.p_context = NULL, .p_extend = &g_external_irq0_ext_cfg, .ipl = (12),
+		.p_context = NULL, .p_extend = &g_external_irq0_ext_cfg, .ipl = (4),
 		.irq = FSP_INVALID_VECTOR, };
 /* Instance structure to use this module. */
 const external_irq_instance_t g_external_irq0 = { .p_ctrl =

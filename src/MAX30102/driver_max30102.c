@@ -35,6 +35,7 @@
  */
 
 #include "driver_max30102.h"
+#include "driver_max30102_interface.h"
 
 /**
  * @brief chip information definition
@@ -418,36 +419,37 @@ uint8_t max30102_read(max30102_handle_t *handle, uint32_t *raw_red, uint32_t *ra
     if (res != 0)                                                                                                 /* check result */
     {
         handle->debug_print("max30102: read overflow counter failed.\n");                                         /* read overflow counter failed */
-       
+        max30102_reset_and_reconfigure();
         return 1;                                                                                                 /* return error */
     }
     r = 0;                                                                                                        /* set 0 */
     if (prev != 0)                                                                                                /* check overflow */
     {
-//        r = 4;                                                                                                    /* set 4 */
-//
-//        handle->debug_print("max30102: fifo overrun.\n");                                                         /* fifo overrun*/
-    	// very sus fix here, need to investigate
-    	handle->debug_print("max30102: overflow counter = %d\n", prev);
+        r = 4;                                                                                                    /* set 4 */
 
+        handle->debug_print("max30102: fifo overrun.\n");                                                         /* fifo overrun*/
+        max30102_reset_and_reconfigure();
+
+        /* previous sus fix
     	uint8_t zero = 0;
 
 		handle->iic_write(MAX30102_ADDRESS, MAX30102_REG_FIFO_WRITE_POINTER, &zero, 1);
 		handle->iic_write(MAX30102_ADDRESS, MAX30102_REG_OVERFLOW_COUNTER, &zero, 1);
 		handle->iic_write(MAX30102_ADDRESS, MAX30102_REG_FIFO_READ_POINTER, &zero, 1);
+		*/
     }
     res = handle->iic_read(MAX30102_ADDRESS, MAX30102_REG_FIFO_READ_POINTER, (uint8_t *)&read_point, 1);          /* read fifo read point */
     if (res != 0)                                                                                                 /* check result */
     {
         handle->debug_print("max30102: read fifo read point failed.\n");                                          /* read fifo read point failed */
-       
+        max30102_reset_and_reconfigure();
         return 1;                                                                                                 /* return error */
     }
     res = handle->iic_read(MAX30102_ADDRESS, MAX30102_REG_FIFO_WRITE_POINTER, (uint8_t *)&write_point, 1);        /* read fifo write point */
     if (res != 0)                                                                                                 /* check result */
     {
         handle->debug_print("max30102: read fifo write point failed.\n");                                         /* read fifo write point failed */
-       
+        max30102_reset_and_reconfigure();
         return 1;                                                                                                 /* return error */
     }
     
@@ -464,7 +466,7 @@ uint8_t max30102_read(max30102_handle_t *handle, uint32_t *raw_red, uint32_t *ra
     if (res != 0)                                                                                                 /* check result */
     {
         handle->debug_print("max30102: read mode config failed.\n");                                              /* read mode config failed */
-       
+        max30102_reset_and_reconfigure();
         return 1;                                                                                                 /* return error */
     }
     mode = (max30102_mode_t)(prev & 0x7);                                                                         /* get mode */
@@ -483,7 +485,7 @@ uint8_t max30102_read(max30102_handle_t *handle, uint32_t *raw_red, uint32_t *ra
     else
     {
         handle->debug_print("max30102: mode is invalid.\n");                                                      /* mode is invalid */
-       
+        max30102_reset_and_reconfigure();
         return 5;                                                                                                 /* return error */
     }
     
@@ -491,14 +493,14 @@ uint8_t max30102_read(max30102_handle_t *handle, uint32_t *raw_red, uint32_t *ra
     if (res != 0)                                                                                                 /* check result */
     {
         handle->debug_print("max30102: read fifo data register failed.\n");                                       /* read fifo data register failed */
-       
+        max30102_reset_and_reconfigure();
         return 1;                                                                                                 /* return error */
     }
     res = handle->iic_read(MAX30102_ADDRESS, MAX30102_REG_SPO2_CONFIG, (uint8_t *)&prev, 1);                      /* read spo2 config */
     if (res != 0)                                                                                                 /* check result */
     {
         handle->debug_print("max30102: read spo2 config failed.\n");                                              /* read spo2 config failed */
-       
+        max30102_reset_and_reconfigure();
         return 1;                                                                                                 /* return error */
     }
     prev = prev & 0x3;                                                                                            /* get config */

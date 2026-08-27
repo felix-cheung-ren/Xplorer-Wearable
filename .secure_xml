@@ -77,24 +77,14 @@
       <configSetting altId="p001.sr.sr.fast" configurationId="p001.sr"/>
       <configSetting altId="p002.gpio_mode.gpio_mode_an" configurationId="p002.gpio_mode"/>
       <configSetting altId="p003.gpio_mode.gpio_mode_an" configurationId="p003.gpio_mode"/>
-      <configSetting altId="p004.dirctl.dirctl_in" configurationId="p004.dirctl"/>
-      <configSetting altId="p004.gpio_mode.gpio_mode_peripheral" configurationId="p004.gpio_mode"/>
-      <configSetting altId="p004.sr.sr.fast" configurationId="p004.sr"/>
-      <configSetting altId="p005.dirctl.dirctl_out" configurationId="p005.dirctl"/>
-      <configSetting altId="p005.gpio_mode.gpio_mode_peripheral" configurationId="p005.gpio_mode"/>
-      <configSetting altId="p005.sr.sr.fast" configurationId="p005.sr"/>
+      <configSetting altId="p005.output.high" configurationId="p005"/>
+      <configSetting altId="p005.gpio_mode.gpio_mode_out.high" configurationId="p005.gpio_mode"/>
       <configSetting altId="p006.dirctl.dirctl_in" configurationId="p006.dirctl"/>
       <configSetting altId="p006.gpio_mode.gpio_mode_peripheral" configurationId="p006.gpio_mode"/>
       <configSetting altId="p006.sr.sr.fast" configurationId="p006.sr"/>
       <configSetting altId="p007.dirctl.dirctl_in" configurationId="p007.dirctl"/>
       <configSetting altId="p007.gpio_mode.gpio_mode_peripheral" configurationId="p007.gpio_mode"/>
       <configSetting altId="p007.sr.sr.fast" configurationId="p007.sr"/>
-      <configSetting altId="p008.dirctl.dirctl_out" configurationId="p008.dirctl"/>
-      <configSetting altId="p008.gpio_mode.gpio_mode_peripheral" configurationId="p008.gpio_mode"/>
-      <configSetting altId="p008.sr.sr.fast" configurationId="p008.sr"/>
-      <configSetting altId="p009.dirctl.dirctl_in" configurationId="p009.dirctl"/>
-      <configSetting altId="p009.gpio_mode.gpio_mode_peripheral" configurationId="p009.gpio_mode"/>
-      <configSetting altId="p009.sr.sr.fast" configurationId="p009.sr"/>
       <configSetting altId="p010.dirctl.dirctl_in" configurationId="p010.dirctl"/>
       <configSetting altId="p010.gpio_mode.gpio_mode_peripheral" configurationId="p010.gpio_mode"/>
       <configSetting altId="p010.sr.sr.fast" configurationId="p010.sr"/>
@@ -108,6 +98,12 @@
       <configSetting altId="p013.dirctl.dirctl_in" configurationId="p013.dirctl"/>
       <configSetting altId="p013.gpio_mode.gpio_mode_peripheral" configurationId="p013.gpio_mode"/>
       <configSetting altId="p013.sr.sr.fast" configurationId="p013.sr"/>
+      <configSetting altId="p101.dirctl.dirctl_out" configurationId="p101.dirctl"/>
+      <configSetting altId="p101.gpio_mode.gpio_mode_peripheral" configurationId="p101.gpio_mode"/>
+      <configSetting altId="p101.sr.sr.fast" configurationId="p101.sr"/>
+      <configSetting altId="p102.dirctl.dirctl_in" configurationId="p102.dirctl"/>
+      <configSetting altId="p102.gpio_mode.gpio_mode_peripheral" configurationId="p102.gpio_mode"/>
+      <configSetting altId="p102.sr.sr.fast" configurationId="p102.sr"/>
       <configSetting altId="p104.dirctl.dirctl_in" configurationId="p104.dirctl"/>
       <configSetting altId="p104.gpio_mode.gpio_mode_peripheral" configurationId="p104.gpio_mode"/>
       <configSetting altId="p104.sr.sr.fast" configurationId="p104.sr"/>
@@ -136,10 +132,8 @@
       <configSetting altId="swd.swdio.p117" configurationId="swd.swdio" peripheral="SWD"/>
       <configSetting altId="uart1.uart1_rx.p000" configurationId="uart1.uart1_rx" isUsedByDriver="true" peripheral="UART1"/>
       <configSetting altId="uart1.uart1_tx.p001" configurationId="uart1.uart1_tx" isUsedByDriver="true" peripheral="UART1"/>
-      <configSetting altId="uart2.uart2_cts.p009" configurationId="uart2.uart2_cts" peripheral="UART2"/>
-      <configSetting altId="uart2.uart2_rts.p008" configurationId="uart2.uart2_rts" peripheral="UART2"/>
-      <configSetting altId="uart2.uart2_rx.p004" configurationId="uart2.uart2_rx" peripheral="UART2"/>
-      <configSetting altId="uart2.uart2_tx.p005" configurationId="uart2.uart2_tx" peripheral="UART2"/>
+      <configSetting altId="uart3.uart3_rx.p102" configurationId="uart3.uart3_rx" peripheral="UART3"/>
+      <configSetting altId="uart3.uart3_tx.p101" configurationId="uart3.uart3_tx" peripheral="UART3"/>
     </pincfg>
   </raPinConfiguration>
 </raConfiguration>

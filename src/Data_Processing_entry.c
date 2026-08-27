@@ -76,7 +76,9 @@ void Data_Processing_entry(void *pvParameters)
 				g_correl = correl;
             }
             else
-                max30102_interface_debug_print("Processing: invalid signal\n");
+            {
+                max30102_interface_debug_print("Processing: no valid signal\n");
+            }
         }
         else if (notifications & SENSOR_NOTIFY_LSM6DSV) /* Run once event from lsm int1 is registered */
         {

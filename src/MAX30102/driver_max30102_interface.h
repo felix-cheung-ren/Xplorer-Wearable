@@ -54,6 +54,8 @@ extern max30102_handle_t g_max30102_handle;
 
 void max30102_interface_init(void);
 
+uint8_t max30102_reset_and_reconfigure(void);
+
 /**
  * @defgroup max30102_interface_driver max30102 interface driver function
  * @brief    max30102 interface driver modules

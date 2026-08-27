@@ -151,6 +151,62 @@ void max30102_interface_init(void) {
     }
 }
 
+uint8_t max30102_reset_and_reconfigure(void)
+{
+    fsp_err_t err;
+    uint8_t res;
+    max30102_bool_t dummy_status;
+
+    /* 1. Temporarily disable MCU IRQ so callbacks don't fire while we reconfigure */
+    R_EXT_IRQ_W_ExternalIrqDisable(&g_external_irq0_ctrl);
+
+    /* 2. Issue soft-reset (resets internal registers to default state) */
+    res = max30102_reset(&g_max30102_handle);
+    if (res != 0)
+    {
+        max30102_interface_debug_print("max30102: soft reset failed.\n");
+        return res;
+    }
+
+    /* Wait briefly for chip internal reset sequence to complete */
+    vTaskDelay(pdMS_TO_TICKS(50));
+
+    /* 3. Re-apply operational sensor configuration */
+    max30102_set_shutdown(&g_max30102_handle, MAX30102_BOOL_TRUE);
+    max30102_set_fifo_sample_averaging(&g_max30102_handle, MAX30102_SAMPLE_AVERAGING_4);
+    max30102_set_fifo_roll(&g_max30102_handle, MAX30102_BOOL_TRUE);
+    max30102_set_fifo_almost_full(&g_max30102_handle, 0x0F);
+    max30102_set_mode(&g_max30102_handle, MAX30102_MODE_SPO2);
+    max30102_set_spo2_adc_range(&g_max30102_handle, MAX30102_SPO2_ADC_RANGE_16384);
+    max30102_set_spo2_sample_rate(&g_max30102_handle, MAX30102_SPO2_SAMPLE_RATE_100_HZ);
+    max30102_set_adc_resolution(&g_max30102_handle, MAX30102_ADC_RESOLUTION_18_BIT);
+    max30102_set_led_red_pulse_amplitude(&g_max30102_handle, 0x0F);
+    max30102_set_led_ir_pulse_amplitude(&g_max30102_handle, 0x0F);
+    max30102_set_slot(&g_max30102_handle, MAX30102_SLOT_1, MAX30102_LED_RED);
+    max30102_set_slot(&g_max30102_handle, MAX30102_SLOT_2, MAX30102_LED_IR);
+    max30102_set_slot(&g_max30102_handle, MAX30102_SLOT_3, MAX30102_LED_NONE);
+    max30102_set_slot(&g_max30102_handle, MAX30102_SLOT_4, MAX30102_LED_NONE);
+    max30102_set_interrupt(&g_max30102_handle, MAX30102_INTERRUPT_FIFO_FULL_EN, MAX30102_BOOL_TRUE);
+
+    /* Enable shutdown release */
+    max30102_set_shutdown(&g_max30102_handle, MAX30102_BOOL_FALSE);
+
+    /* 4. Force read interrupt status register to clear INT pin back to HIGH */
+    max30102_get_interrupt_status(&g_max30102_handle, MAX30102_INTERRUPT_STATUS_FIFO_FULL, &dummy_status);
+
+    /* 5. Clear MCU pending IRQ status and re-enable interrupt pin */
+    err = R_EXT_IRQ_W_ExternalIrqEnable(&g_external_irq0_ctrl);
+    if (err != FSP_SUCCESS)
+    {
+        max30102_interface_debug_print("max30102: irq re-enable failed.\n");
+        return 1;
+    }
+
+    max30102_interface_debug_print("max30102: soft reset success.\n");
+
+    return 0; // Recovery complete
+}
+
 /**
  * @brief  interface iic bus init
  * @return status code
