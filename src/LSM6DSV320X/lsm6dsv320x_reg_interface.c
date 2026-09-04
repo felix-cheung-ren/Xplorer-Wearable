@@ -4,6 +4,15 @@
 #include "common_data.h"
 #include "i2c_shared.h"
 #include "sensor_events.h"
+#include "common_utils.h"
+
+#define ENABLE_LSM_DEBUG_PRINTS 0
+
+#if ENABLE_LSM_DEBUG_PRINTS
+    #define LSM_PRINT(...) APP_PRINT(__VA_ARGS__)
+#else
+    #define LSM_PRINT(...) ((void)0)
+#endif
 
 /* Change based on lsm6dsv320x needs */
 #define LSM_MAX_WRITE_LEN  64
@@ -33,34 +42,35 @@ void lsm6dsv320x_interface_init(void)
     dev_ctx.handle    = &g_i2c_master0_ctrl;  // Same I2C bus for everything so kinda irrelevant
 
     err = lsm6dsv320x_device_id_get(&dev_ctx, &whoamI);
-    if (err != 0) { max30102_interface_debug_print("lsm device id get failed \n"); while(1); }
+
+    if (err != 0) { LSM_PRINT("lsm device id get failed \n"); while(1); }
 
     if (whoamI != LSM6DSV320X_ID)
     {
-        max30102_interface_debug_print("Device ID match failed\n");
+    	LSM_PRINT("Device ID match failed\n");
         while(1);
     }
 
     /* Power-on-reset lsm6dsv320x */
     err = lsm6dsv320x_sw_por(&dev_ctx);
-    if (err != 0) { max30102_interface_debug_print("power on reset lsm failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("power on reset lsm failed\n"); while(1); }
     platform_delay(10);
 
     /* Block data update (data integrity setting) */
     err = lsm6dsv320x_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);
-    if (err != 0) { max30102_interface_debug_print("block data update failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("block data update failed \n"); while(1); }
 
     /* FS_XL = ±8 g */
     err = lsm6dsv320x_xl_full_scale_set(&dev_ctx, LSM6DSV320X_8g);
-    if (err != 0) { max30102_interface_debug_print("xl full scale set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("xl full scale set failed\n"); while(1); }
 
     /* Turn on the low-g accelerometer (Data rate: ODR_XL >= 30 Hz for SC and 480 Hz for FF) */
     err = lsm6dsv320x_xl_setup(&dev_ctx, LSM6DSV320X_ODR_AT_480Hz, LSM6DSV320X_XL_HIGH_PERFORMANCE_MD);
-    if (err != 0) { max30102_interface_debug_print("turn on low-g accel failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("turn on low-g accel failed \n"); while(1); }
 
     /* Turn on the gyroscope for SFLP */
     err = lsm6dsv320x_gy_setup(&dev_ctx, LSM6DSV320X_ODR_AT_120Hz, LSM6DSV320X_GY_HIGH_PERFORMANCE_MD);
-    if (err != 0) { max30102_interface_debug_print("turn on gyro failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("turn on gyro failed \n"); while(1); }
 
     /* Configure step count, free fall, and SFLP */
     lsm6dsv320x_stpcnt_init();
@@ -72,7 +82,7 @@ void lsm6dsv320x_interface_init(void)
     int_mode.enable = 1;
     int_mode.lir = 0;       // pulsed, not latched
     err = lsm6dsv320x_interrupt_enable_set(&dev_ctx, int_mode);
-    if (err != 0) { max30102_interface_debug_print("interrupt enable failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("interrupt enable failed\n"); while(1); }
 
     /* Open line for lsm6dsv320x INT1 pin interrupt */
     ext_irq_w_extended_cfg_t lsm_irq_extend = { .irq_pin = EXT_IRQ_W_IRQN_PIN_LSM };
@@ -88,11 +98,11 @@ void lsm6dsv320x_interface_init(void)
     };
 
     err = R_EXT_IRQ_W_ExternalIrqOpen(&g_external_irq3_ctrl, &lsm_irq_cfg);
-    if (err != FSP_SUCCESS) { max30102_interface_debug_print("lsm6dsv320x: external int1 irq open failed.\n"); while(1); }
+    if (err != FSP_SUCCESS) { LSM_PRINT("lsm6dsv320x: external int1 irq open failed.\n"); while(1); }
 
     /* Enable line for lsm6dsv320x INT1 pin interrupt */
     err = R_EXT_IRQ_W_ExternalIrqEnable(&g_external_irq3_ctrl);
-    if (err != FSP_SUCCESS) { max30102_interface_debug_print("lsm6dsv320x: external irq enable failed.\n"); while(1); }
+    if (err != FSP_SUCCESS) { LSM_PRINT("lsm6dsv320x: external irq enable failed.\n"); while(1); }
 }
 
 int32_t lsm6dsv320x_stpcnt_init(void)
@@ -106,21 +116,21 @@ int32_t lsm6dsv320x_stpcnt_init(void)
     sc_cfg.step_counter_enable = 1;
     sc_cfg.false_step_rej = 0;
     err = lsm6dsv320x_stpcnt_mode_set(&dev_ctx, sc_cfg);
-    if (err != 0) { max30102_interface_debug_print("step counter enable failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("step counter enable failed \n"); while(1); }
 
     /* Set debounce to minimum for demo (not super practical, but also not very cool to see increments of 10 lol) */
     err = lsm6dsv320x_stpcnt_debounce_set(&dev_ctx, 0);
-    if (err != 0) { max30102_interface_debug_print("debounce set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("debounce set failed\n"); while(1); }
 
     /* Route step detector interrupt to INT1 pin */
     lsm6dsv320x_pin_int_route_t int1_route = {0};
     int1_route.step_detector = 1;
     err = lsm6dsv320x_pin_int1_route_embedded_set(&dev_ctx, &int1_route);
-    if (err != 0) { max30102_interface_debug_print("sc int1 route set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("sc int1 route set failed\n"); while(1); }
 
     /* Reset step counter */
     err = lsm6dsv320x_stpcnt_rst_step_set(&dev_ctx, 1);
-    if (err != 0) { max30102_interface_debug_print("step count reset failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("step count reset failed \n"); while(1); }
 
     return 0;
 }
@@ -133,17 +143,17 @@ int32_t lsm6dsv320x_free_fall_init(void)
 
     /* Set free fall time windows */
     err = lsm6dsv320x_ff_time_windows_set(&dev_ctx, 1);
-    if (err != 0) { max30102_interface_debug_print("ff time windows set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("ff time windows set failed\n"); while(1); }
 
     /* Set free fall thresholds */
     err = lsm6dsv320x_ff_thresholds_set(&dev_ctx, LSM6DSV320X_156_mg);
-    if (err != 0) { max30102_interface_debug_print("ff threshold set failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("ff threshold set failed \n"); while(1); }
 
     /* Route free fall detector interrupt to INT1 pin */
     lsm6dsv320x_pin_int_route_t int1_route = {0};
     int1_route.freefall = 1;
     err = lsm6dsv320x_pin_int1_route_set(&dev_ctx, &int1_route);
-    if (err != 0) { max30102_interface_debug_print("ff int1 route set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("ff int1 route set failed\n"); while(1); }
 
     return 0;
 }
@@ -156,15 +166,15 @@ int32_t lsm6dsv320x_sflp_init(void)
 
 	/* Enable SFLP game rotation */
 	err = lsm6dsv320x_sflp_game_rotation_set(&dev_ctx, PROPERTY_ENABLE);
-	if (err != 0) { max30102_interface_debug_print("failed to enable SFLP game rotation\n"); return err; }
+	if (err != 0) { LSM_PRINT("failed to enable SFLP game rotation\n"); return err; }
 
 	/* Reset SFLP game rotation */
 	err = lsm6dsv320x_sflp_game_rotation_reset(&dev_ctx, PROPERTY_ENABLE);
-	if (err != 0) { max30102_interface_debug_print("failed to reset SFLP game rotation\n"); return err; }
+	if (err != 0) { LSM_PRINT("failed to reset SFLP game rotation\n"); return err; }
 
 	/* Set SFLP game rate */
 	err = lsm6dsv320x_sflp_data_rate_set(&dev_ctx, LSM6DSV320X_SFLP_30Hz);
-	if (err != 0) { max30102_interface_debug_print("failed to set SFLP game rate\n"); return err; }
+	if (err != 0) { LSM_PRINT("failed to set SFLP game rate\n"); return err; }
 
 	return 0;
 }
@@ -181,7 +191,7 @@ int32_t lsm6dsv320x_sflp_get(void)
 	/* Grab quaternions */
     err = lsm6dsv320x_sflp_quaternion_raw_get(&dev_ctx, quats_lsb);
     if (err != 0) {
-		max30102_interface_debug_print("failed to read quaternions\n");
+    	LSM_PRINT("failed to read quaternions\n");
 		g_quaternions[0] = 1.0f, g_quaternions[1] = 0.0f, g_quaternions[2] = 0.0f, g_quaternions[3] = 0.0f;
 		return err;
 	}
