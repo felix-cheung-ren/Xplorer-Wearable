@@ -1,9 +1,8 @@
 #include "lsm6dsv320x_reg_interface.h"
 #include "lsm6dsv320x_reg.h"
-#include "MAX30102/driver_max30102_interface.h"
 #include "common_data.h"
-#include "i2c_shared.h"
-#include "sensor_events.h"
+#include "SENSOR_CMN/i2c_shared.h"
+#include "SENSOR_CMN/sensor_events.h"
 #include "common_utils.h"
 
 #define ENABLE_LSM_DEBUG_PRINTS 0

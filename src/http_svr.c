@@ -8,11 +8,11 @@
 * SPDX-License-Identifier: BSD-3-Clause
 ***********************************************************************************************************************/
 #include "common_data.h"
-#include "common_utils.h"
+#include <UTILS/common_utils.h>
 #include "http_svr.h"
 #include "lfs.h"
 #include "rm_httpd.h"
-#include "sensor_events.h"
+#include "SENSOR_CMN/sensor_events.h"
 #include "LSM6DSV320X/lsm6dsv320x_reg_interface.h"
 
 https_server_sec_t p_sec;

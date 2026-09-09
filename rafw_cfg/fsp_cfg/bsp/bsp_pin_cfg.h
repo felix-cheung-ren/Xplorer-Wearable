@@ -14,7 +14,11 @@ FSP_HEADER
 #define BSP_GPIO_LED_1 (BSP_IO_PORT_01_PIN_01)
 #define BSP_GPIO_LED_2 (BSP_IO_PORT_01_PIN_02)
 #define BSP_GPIO_LED_3 (BSP_IO_PORT_01_PIN_03)
-#define LED0 (BSP_IO_PORT_01_PIN_14)
+#define LCD_RST (BSP_IO_PORT_01_PIN_11)
+#define LCD_CS (BSP_IO_PORT_01_PIN_12)
+#define LCD_DC (BSP_IO_PORT_01_PIN_13)
+#define LCD_MOSI (BSP_IO_PORT_01_PIN_14)
+#define LCD_CLK (BSP_IO_PORT_01_PIN_15)
 
 extern const ioport_cfg_t g_bsp_pin_cfg; /* RRQ61xxx-EVB */
 #if !defined(BSP_MCU_GROUP_RA6W1) //TIN-TODO

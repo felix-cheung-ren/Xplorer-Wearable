@@ -7,9 +7,9 @@
 *
 * SPDX-License-Identifier: BSD-3-Clause
 ***********************************************************************************************************************/
+#include <UTILS/common_utils.h>
 #include "app_task.h"
 #include "http_svr.h"
-#include "common_utils.h"
 #include "rm_wifi_user_app_gpio_handle.h"
 #include "lwip/netif.h"
 #include "ip4_addr.h"

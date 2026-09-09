@@ -3,7 +3,7 @@
 #include "MAX30102/driver_max30102_interface.h"
 #include "MAX30102/MAX30102_data.h"
 #include "common_data.h"
-#include "sensor_events.h"
+#include "SENSOR_CMN/sensor_events.h"
 
 /* MAX30102 shared data for processing */
 volatile uint32_t g_algo_red[ALGO_BUFFER_SIZE];

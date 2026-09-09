@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include "bsp_api.h"
 #include "common_data.h"
+#include "r_dmac_w.h"
+#include "r_transfer_api.h"
+#include "r_spi_w.h"
 #include "r_i2c_master_w.h"
 #include "r_i2c_master_api.h"
 #include "r_uart_w.h"
@@ -14,6 +17,37 @@
 #include "r_rtc_w.h"
 #include "rm_wifi.h"
 FSP_HEADER
+/* Transfer on DMAC Instance. */
+extern const transfer_instance_t g_transfer1;
+
+/** Access the DMAC instance using these structures when calling API functions directly (::p_api is not used). */
+extern dmac_instance_ctrl_t g_transfer1_ctrl;
+extern const transfer_cfg_t g_transfer1_cfg;
+
+#ifndef g_spi_w0_rx_transfer_callback
+void g_spi_w0_rx_transfer_callback(dmac_callback_args_t *p_args);
+#endif
+/* Transfer on DMAC Instance. */
+extern const transfer_instance_t g_transfer0;
+
+/** Access the DMAC instance using these structures when calling API functions directly (::p_api is not used). */
+extern dmac_instance_ctrl_t g_transfer0_ctrl;
+extern const transfer_cfg_t g_transfer0_cfg;
+
+#ifndef g_spi_w0_tx_transfer_callback
+void g_spi_w0_tx_transfer_callback(dmac_callback_args_t *p_args);
+#endif
+/** SPI on SPI Instance. */
+extern const spi_instance_t g_spi_w0;
+
+/** Access the SPI instance using these structures when calling API functions directly (::p_api is not used). */
+extern spi_w_instance_ctrl_t g_spi_w0_ctrl;
+extern const spi_cfg_t g_spi_w0_cfg;
+
+/** Callback used by SPI Instance. */
+#ifndef spi_callback
+void spi_callback(spi_callback_args_t *p_args);
+#endif
 /* I2C Master on I2C Instance. */
 extern const i2c_master_instance_t g_i2c_master0;
 

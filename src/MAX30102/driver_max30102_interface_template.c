@@ -37,8 +37,8 @@
 #include "driver_max30102_interface.h"
 #include "MAX30102/driver_max30102.h"
 #include "hal_data.h"
-#include "i2c_shared.h"
-#include "common_utils.h"
+#include "SENSOR_CMN/i2c_shared.h"
+#include <UTILS/common_utils.h>
 
 /* Change based on MAX30102 needs */
 #define MAX30102_MAX_WRITE_LEN  64

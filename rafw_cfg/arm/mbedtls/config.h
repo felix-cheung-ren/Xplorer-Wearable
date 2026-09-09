@@ -48,7 +48,7 @@ FSP_HEADER
 #include "mbedtls/tls-config.h"
 #endif
 
-#if 3 && FSP_NOT_DEFINED
+#if 4 && FSP_NOT_DEFINED
  #define CONFIG_MEDTLS_USE_AFR_MEMORY
 #endif
 

@@ -10,7 +10,7 @@
 #include "board_cfg.h"
 #define FSP_NOT_DEFINED 0
 #ifndef BSP_CFG_RTOS
-#if (FSP_NOT_DEFINED) != (3)
+#if (FSP_NOT_DEFINED) != (4)
 #define BSP_CFG_RTOS (2)
 #elif (FSP_NOT_DEFINED) != (FSP_NOT_DEFINED)
               #define BSP_CFG_RTOS (1)

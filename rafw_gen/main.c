@@ -9,6 +9,8 @@ extern void MAX30102_create(void);
 extern TaskHandle_t MAX30102;
 extern void Data_Processing_create(void);
 extern TaskHandle_t Data_Processing;
+extern void Display_create(void);
+extern TaskHandle_t Display;
 uint32_t g_fsp_common_thread_count;
 bool g_fsp_common_initialized;
 SemaphoreHandle_t g_fsp_common_initialized_semaphore;
@@ -139,6 +141,7 @@ int main(void) {
 	app_task_create();
 	MAX30102_create();
 	Data_Processing_create();
+	Display_create();
 
 	/* Start the scheduler. */
 	vTaskStartScheduler();

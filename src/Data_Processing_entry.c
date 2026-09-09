@@ -3,7 +3,7 @@
 #include "MAX30102/algorithm_by_RF.h"
 #include "MAX30102/MAX30102_data.h"
 #include "LSM6DSV320X/lsm6dsv320x_reg_interface.h"
-#include "sensor_events.h"
+#include "SENSOR_CMN/sensor_events.h"
 #include <math.h>
 
 /* Globals to be passed into JSON */

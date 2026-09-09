@@ -1,5 +1,156 @@
 /* generated HAL source file - do not edit */
 #include "hal_data.h"
+dmac_instance_ctrl_t g_transfer1_ctrl;
+transfer_info_t g_transfer1_info = { .transfer_settings_word_b.dest_addr_mode =
+		TRANSFER_ADDR_MODE_INCREMENTED,
+		.transfer_settings_word_b.src_addr_mode = TRANSFER_ADDR_MODE_FIXED,
+		.transfer_settings_word_b.size = TRANSFER_SIZE_1_BYTE,
+		.transfer_settings_word_b.mode = TRANSFER_MODE_NORMAL,
+		.transfer_settings_word_b.burst_mode = TRANSFER_BURST_MODE_DISABLED,
+		.p_dest = (void*) NULL, .p_src = (void const*) NULL, .length = 1, };
+const dmac_extended_cfg_t g_transfer1_extend = {
+#if BSP_FEATURE_DMAC_HAS_SHARED_IRQ
+    .irq                 = DMA_IRQn,
+#else
+#if defined(VECTOR_NUMBER_DMAC_INT)
+    .irq                 = VECTOR_NUMBER_DMAC_INT,
+ #else
+		.irq = FSP_INVALID_VECTOR,
+#endif
+#endif
+		.ipl = (5), .channel = 1, .p_callback = g_spi_w0_rx_transfer_callback,
+		.p_context = NULL, .periph_trigger = BSP_DMAC_TRIG_SPI1_RX,
+		.irq_num_of_trans = 0, .start_mode = DMAC_START_ON_PERIPHERAL_REQUEST,
+		.init_mode = DMAC_INIT_AX_BX_AY_BY,
+		.idle_mode = DMAC_IDLE_BLOCKING_MODE, .channel_prio = 0, };
+const transfer_cfg_t g_transfer1_cfg = { .p_info = &g_transfer1_info,
+		.p_extend = &g_transfer1_extend, };
+/* Instance structure to use this module. */
+const transfer_instance_t g_transfer1 = { .p_ctrl = &g_transfer1_ctrl, .p_cfg =
+		&g_transfer1_cfg, .p_api = &g_transfer_on_dmac_w };
+dmac_instance_ctrl_t g_transfer0_ctrl;
+transfer_info_t g_transfer0_info = { .transfer_settings_word_b.dest_addr_mode =
+		TRANSFER_ADDR_MODE_FIXED, .transfer_settings_word_b.src_addr_mode =
+		TRANSFER_ADDR_MODE_INCREMENTED, .transfer_settings_word_b.size =
+		TRANSFER_SIZE_1_BYTE, .transfer_settings_word_b.mode =
+		TRANSFER_MODE_NORMAL, .transfer_settings_word_b.burst_mode =
+		TRANSFER_BURST_MODE_DISABLED, .p_dest = (void*) NULL, .p_src =
+		(void const*) NULL, .length = 1, };
+const dmac_extended_cfg_t g_transfer0_extend = {
+#if BSP_FEATURE_DMAC_HAS_SHARED_IRQ
+    .irq                 = DMA_IRQn,
+#else
+#if defined(VECTOR_NUMBER_DMAC_INT)
+    .irq                 = VECTOR_NUMBER_DMAC_INT,
+ #else
+		.irq = FSP_INVALID_VECTOR,
+#endif
+#endif
+		.ipl = (5), .channel = 0, .p_callback = g_spi_w0_tx_transfer_callback,
+		.p_context = NULL, .periph_trigger = BSP_DMAC_TRIG_SPI1_TX,
+		.irq_num_of_trans = 0, .start_mode = DMAC_START_ON_PERIPHERAL_REQUEST,
+		.init_mode = DMAC_INIT_AX_BX_AY_BY,
+		.idle_mode = DMAC_IDLE_BLOCKING_MODE, .channel_prio = 0, };
+const transfer_cfg_t g_transfer0_cfg = { .p_info = &g_transfer0_info,
+		.p_extend = &g_transfer0_extend, };
+/* Instance structure to use this module. */
+const transfer_instance_t g_transfer0 = { .p_ctrl = &g_transfer0_ctrl, .p_cfg =
+		&g_transfer0_cfg, .p_api = &g_transfer_on_dmac_w };
+#define FSP_NOT_DEFINED (UINT32_MAX)
+#if (FSP_NOT_DEFINED) != (g_spi_w0_tx_transfer_callback)
+
+/* If the transfer module is DMAC, define a DMAC transfer callback. */
+extern void spi_w_tx_dmac_callback(spi_w_instance_ctrl_t const * const p_ctrl);
+
+void g_spi_w0_tx_transfer_callback (dmac_callback_args_t * p_args)
+{
+    FSP_PARAMETER_NOT_USED(p_args);
+    spi_w_tx_dmac_callback(&g_spi_w0_ctrl);
+}
+#endif
+
+#if (FSP_NOT_DEFINED) != (g_spi_w0_rx_transfer_callback)
+
+/* If the transfer module is DMAC, define a DMAC transfer callback. */
+extern void spi_w_rx_dmac_callback(spi_w_instance_ctrl_t const * const p_ctrl);
+
+void g_spi_w0_rx_transfer_callback (dmac_callback_args_t * p_args)
+{
+    FSP_PARAMETER_NOT_USED(p_args);
+    spi_w_rx_dmac_callback(&g_spi_w0_ctrl);
+}
+#endif
+#undef FSP_NOT_DEFINED
+
+spi_w_instance_ctrl_t g_spi_w0_ctrl;
+
+/** SPI extended configuration for SPI HAL driver */
+const spi_w_extended_cfg_t g_spi_w0_ext_cfg = { .spck_div =
+		/* Actual calculated bitrate: 5000000. */3, .cs_select =
+		SPI_W_CS_SELECT_CS0, .byte_swap = SPI_W_BYTE_SWAP_DISABLE, .cap_edge =
+		SPI_W_CAPTURE_CURRENT_EDGE, .gen_ipl = (12),
+#if defined(VECTOR_NUMBER_SPIW1_IRQ)
+    .gen_irq             = VECTOR_NUMBER_SPIW1_IRQ,
+#else
+		.gen_irq = FSP_INVALID_VECTOR,
+#endif
+		.rx_fifo_lvl_thres = 0, .tx_fifo_lvl_thres = 0,
+#if SPI_W_CFG_FAST_MODE_ENABLE
+    .skip_disable      = (false),
+#endif
+		.skip_busy_check = (false) };
+
+/** SPI configuration for SPI HAL driver */
+const spi_cfg_t g_spi_w0_cfg = { .channel = 1 - SPI_W_CHANNEL_OFFSET,
+
+#if defined(VECTOR_NUMBER_SPIW1_RX_IRQ)
+    .rxi_irq             = VECTOR_NUMBER_SPIW1_RX_IRQ,
+#else
+		.rxi_irq = FSP_INVALID_VECTOR,
+#endif
+#if defined(VECTOR_NUMBER_SPIW1_TX_IRQ)
+    .txi_irq             = VECTOR_NUMBER_SPIW1_TX_IRQ,
+#else
+		.txi_irq = FSP_INVALID_VECTOR,
+#endif
+#if defined(VECTOR_NUMBER_SPIW1_II_IRQ)
+    .tei_irq             = VECTOR_NUMBER_SPIW1_II_IRQ,
+#else
+		.tei_irq = FSP_INVALID_VECTOR,
+#endif
+#if defined(VECTOR_NUMBER_SPIW1_EI_IRQ)
+    .eri_irq             = VECTOR_NUMBER_SPIW1_EI_IRQ,
+#else
+		.eri_irq = FSP_INVALID_VECTOR,
+#endif
+
+		.rxi_ipl = (BSP_IRQ_DISABLED), .txi_ipl = (BSP_IRQ_DISABLED), .tei_ipl =
+				(BSP_IRQ_DISABLED), .eri_ipl = (BSP_IRQ_DISABLED),
+
+		.operating_mode = SPI_MODE_MASTER,
+
+		.clk_phase = SPI_CLK_PHASE_EDGE_ODD, .clk_polarity =
+				SPI_CLK_POLARITY_LOW,
+
+#define FSP_NOT_DEFINED (1)
+#if (FSP_NOT_DEFINED == g_transfer0)
+    .p_transfer_tx       = NULL,
+#else
+		.p_transfer_tx = &g_transfer0,
+#endif
+#if (FSP_NOT_DEFINED == g_transfer1)
+    .p_transfer_rx       = NULL,
+#else
+		.p_transfer_rx = &g_transfer1,
+#endif
+#undef FSP_NOT_DEFINED
+		.p_callback = spi_callback,
+
+		.p_context = NULL, .p_extend = (void*) &g_spi_w0_ext_cfg, };
+
+/* Instance structure to use this module. */
+const spi_instance_t g_spi_w0 = { .p_ctrl = &g_spi_w0_ctrl, .p_cfg =
+		&g_spi_w0_cfg, .p_api = &g_spi_on_spi_w };
 #define FSP_NOT_DEFINED (UINT32_MAX)
 #if (FSP_NOT_DEFINED) != (FSP_NOT_DEFINED)
 /* If the transfer module is DMAC, define a DMAC transfer callback. */

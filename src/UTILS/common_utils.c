@@ -7,8 +7,8 @@
 *
 * SPDX-License-Identifier: BSD-3-Clause
 ***********************************************************************************************************************/
+#include <UTILS/common_utils.h>
 #include "bsp_api.h"
-#include "common_utils.h"
 
 #define BANNER_1    "******************************************************************\n\r"
 #define BANNER_2    "*   Wearable Demo\n\r"
