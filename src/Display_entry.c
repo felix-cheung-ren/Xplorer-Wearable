@@ -3,6 +3,8 @@
 #include "GC9A01/lv_port_disp.h"
 #include "GC9A01/lvgl/examples/anim/lv_example_anim.h"
 #include "UTILS/common_utils.h"
+#include "ui/ui.h"
+#include "SENSOR_CMN/sensor_events.h"
 
 static uint32_t lv_tick_get_ms(void)
 {
@@ -38,11 +40,21 @@ void Display_entry(void *pvParameters) {
 
 	lv_port_disp_init();
 
-	lv_example_anim_2();
+	ui_init();
+
+	lv_arc_set_range(ui_ArcSpO2, 0, 100);
+	lv_arc_set_range(ui_ArcHeartRate, 0, 140);
+
+//	lv_example_anim_2();
 //	lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x00FF00), 0);
 
 	while (1) {
 		lv_timer_handler();
+		lv_label_set_text_fmt(ui_LabelHeartRate, "%ld bpm", g_heart_rate);
+		lv_label_set_text_fmt(ui_LabelSpO2, "%d.%d%%", (int)g_spo2, (int)(g_spo2 * 10) % 10);
+		lv_label_set_text_fmt(ui_LabelSteps, "%d steps", g_step_count);
+		lv_arc_set_value(ui_ArcSpO2, (int32_t)g_spo2);
+		lv_arc_set_value(ui_ArcHeartRate, (int32_t)g_heart_rate);
 		vTaskDelay(pdMS_TO_TICKS(5));
 	}
 }
