@@ -72,7 +72,7 @@ This project follows the development of a wearable POC with wireless data delive
 
 Built on Renesas FSP v2.1.0 with FreeRTOS:
 
-![Task Architecture](docs/task_diagram.svg)
+<img width="930" height="668" alt="image" src="https://github.com/user-attachments/assets/e7082968-566d-4a4c-99f0-832f69ac8af6" />
 
 ### Task Breakdown
 
