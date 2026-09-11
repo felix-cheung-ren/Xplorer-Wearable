@@ -16,6 +16,7 @@
 #define SENSOR_NOTIFY_LSM6DSV     (1UL << 1)
 
 extern TaskHandle_t g_data_processing_task_handle;
+extern TaskHandle_t g_display_task_handle;
 
 extern volatile int32_t g_heart_rate;
 extern volatile float g_spo2;

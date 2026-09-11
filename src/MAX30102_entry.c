@@ -24,7 +24,6 @@ void MAX30102_entry(void *pvParameters)
     uint8_t res;
     uint8_t len;
 
-    /* Main loop */
     while (1)
     {
         if (g_max30102_irq_fired != 0)
