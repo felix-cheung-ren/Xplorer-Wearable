@@ -30,7 +30,7 @@ void lsm_irq_callback(external_irq_callback_args_t *p_args)
 stmdev_ctx_t dev_ctx;
 uint8_t whoamI;
 
-void lsm6dsv320x_interface_init(void)
+int32_t lsm6dsv320x_interface_init(void)
 {
     int32_t err;
 
@@ -42,7 +42,7 @@ void lsm6dsv320x_interface_init(void)
 
     err = lsm6dsv320x_device_id_get(&dev_ctx, &whoamI);
 
-    if (err != 0) { LSM_PRINT("lsm device id get failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("lsm device id get failed \n"); return err; }
 
     if (whoamI != LSM6DSV320X_ID)
     {
@@ -52,24 +52,24 @@ void lsm6dsv320x_interface_init(void)
 
     /* Power-on-reset lsm6dsv320x */
     err = lsm6dsv320x_sw_por(&dev_ctx);
-    if (err != 0) { LSM_PRINT("power on reset lsm failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("power on reset lsm failed\n"); return err; }
     platform_delay(10);
 
     /* Block data update (data integrity setting) */
     err = lsm6dsv320x_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);
-    if (err != 0) { LSM_PRINT("block data update failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("block data update failed \n"); return err; }
 
     /* FS_XL = ±8 g */
     err = lsm6dsv320x_xl_full_scale_set(&dev_ctx, LSM6DSV320X_8g);
-    if (err != 0) { LSM_PRINT("xl full scale set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("xl full scale set failed\n"); return err; }
 
     /* Turn on the low-g accelerometer (Data rate: ODR_XL >= 30 Hz for SC and 480 Hz for FF) */
     err = lsm6dsv320x_xl_setup(&dev_ctx, LSM6DSV320X_ODR_AT_480Hz, LSM6DSV320X_XL_HIGH_PERFORMANCE_MD);
-    if (err != 0) { LSM_PRINT("turn on low-g accel failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("turn on low-g accel failed \n"); return err; }
 
     /* Turn on the gyroscope for SFLP */
     err = lsm6dsv320x_gy_setup(&dev_ctx, LSM6DSV320X_ODR_AT_120Hz, LSM6DSV320X_GY_HIGH_PERFORMANCE_MD);
-    if (err != 0) { LSM_PRINT("turn on gyro failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("turn on gyro failed \n"); return err; }
 
     /* Configure step count, free fall, and SFLP */
     lsm6dsv320x_stpcnt_init();
@@ -81,7 +81,7 @@ void lsm6dsv320x_interface_init(void)
     int_mode.enable = 1;
     int_mode.lir = 0;       // pulsed, not latched
     err = lsm6dsv320x_interrupt_enable_set(&dev_ctx, int_mode);
-    if (err != 0) { LSM_PRINT("interrupt enable failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("interrupt enable failed\n"); return err; }
 
     /* Open line for lsm6dsv320x INT1 pin interrupt */
     ext_irq_w_extended_cfg_t lsm_irq_extend = { .irq_pin = EXT_IRQ_W_IRQN_PIN_LSM };
@@ -97,11 +97,13 @@ void lsm6dsv320x_interface_init(void)
     };
 
     err = R_EXT_IRQ_W_ExternalIrqOpen(&g_external_irq3_ctrl, &lsm_irq_cfg);
-    if (err != FSP_SUCCESS) { LSM_PRINT("lsm6dsv320x: external int1 irq open failed.\n"); while(1); }
+    if (err != FSP_SUCCESS) { LSM_PRINT("lsm6dsv320x: external int1 irq open failed.\n"); return err; }
 
     /* Enable line for lsm6dsv320x INT1 pin interrupt */
     err = R_EXT_IRQ_W_ExternalIrqEnable(&g_external_irq3_ctrl);
-    if (err != FSP_SUCCESS) { LSM_PRINT("lsm6dsv320x: external irq enable failed.\n"); while(1); }
+    if (err != FSP_SUCCESS) { LSM_PRINT("lsm6dsv320x: external irq enable failed.\n"); return err; }
+
+    return 0;
 }
 
 int32_t lsm6dsv320x_stpcnt_init(void)
@@ -115,21 +117,21 @@ int32_t lsm6dsv320x_stpcnt_init(void)
     sc_cfg.step_counter_enable = 1;
     sc_cfg.false_step_rej = 0;
     err = lsm6dsv320x_stpcnt_mode_set(&dev_ctx, sc_cfg);
-    if (err != 0) { LSM_PRINT("step counter enable failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("step counter enable failed \n"); return err; }
 
     /* Set debounce to minimum for demo (not super practical, but also not very cool to see increments of 10 lol) */
     err = lsm6dsv320x_stpcnt_debounce_set(&dev_ctx, 0);
-    if (err != 0) { LSM_PRINT("debounce set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("debounce set failed\n"); return err; }
 
     /* Route step detector interrupt to INT1 pin */
     lsm6dsv320x_pin_int_route_t int1_route = {0};
     int1_route.step_detector = 1;
     err = lsm6dsv320x_pin_int1_route_embedded_set(&dev_ctx, &int1_route);
-    if (err != 0) { LSM_PRINT("sc int1 route set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("sc int1 route set failed\n"); return err; }
 
     /* Reset step counter */
     err = lsm6dsv320x_stpcnt_rst_step_set(&dev_ctx, 1);
-    if (err != 0) { LSM_PRINT("step count reset failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("step count reset failed \n"); return err; }
 
     return 0;
 }
@@ -142,17 +144,17 @@ int32_t lsm6dsv320x_free_fall_init(void)
 
     /* Set free fall time windows */
     err = lsm6dsv320x_ff_time_windows_set(&dev_ctx, 1);
-    if (err != 0) { LSM_PRINT("ff time windows set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("ff time windows set failed\n"); return err; }
 
     /* Set free fall thresholds */
     err = lsm6dsv320x_ff_thresholds_set(&dev_ctx, LSM6DSV320X_156_mg);
-    if (err != 0) { LSM_PRINT("ff threshold set failed \n"); while(1); }
+    if (err != 0) { LSM_PRINT("ff threshold set failed \n"); return err; }
 
     /* Route free fall detector interrupt to INT1 pin */
     lsm6dsv320x_pin_int_route_t int1_route = {0};
     int1_route.freefall = 1;
     err = lsm6dsv320x_pin_int1_route_set(&dev_ctx, &int1_route);
-    if (err != 0) { LSM_PRINT("ff int1 route set failed\n"); while(1); }
+    if (err != 0) { LSM_PRINT("ff int1 route set failed\n"); return err; }
 
     return 0;
 }
@@ -226,7 +228,7 @@ int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t 
 
     /* Set slave address for LSM6DSV320X */
     err = R_I2C_MASTER_W_SlaveAddressSet(&g_i2c_master0_ctrl, (LSM6DSV320X_I2C_ADD_L >> 1), I2C_MASTER_ADDR_MODE_7BIT);
-    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return err; }
 
     /* Prepend write register address with the data */
     write_buf[0] = reg;
@@ -237,18 +239,18 @@ int32_t platform_write(void *handle, uint8_t reg, const uint8_t *bufp, uint16_t 
     xSemaphoreTake(g_i2c_complete_sem, 0); // clear any leftover semaphore
 
     err = R_I2C_MASTER_W_Write(&g_i2c_master0_ctrl, write_buf, len + 1, false);
-    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return err; }
 
     /* Wait/block until write completes */
     if (xSemaphoreTake(g_i2c_complete_sem, pdMS_TO_TICKS(I2C_TRANSACTION_BUSY_DELAY)) != pdTRUE)
     {
         xSemaphoreGive(g_i2c_mutex);
-        return -1;
+        return err;
     }
     if (I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event)
     {
         xSemaphoreGive(g_i2c_mutex);
-        return -1;
+        return err;
     }
 
     xSemaphoreGive(g_i2c_mutex);
@@ -275,25 +277,25 @@ int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len)
 
     /* Set slave address for LSM6DSV320X */
     err = R_I2C_MASTER_W_SlaveAddressSet(&g_i2c_master0_ctrl, (LSM6DSV320X_I2C_ADD_L >> 1), I2C_MASTER_ADDR_MODE_7BIT);
-    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return err; }
 
     /* Write register address to read from */
     g_i2c_callback_event = I2C_MASTER_EVENT_ABORTED;
     xSemaphoreTake(g_i2c_complete_sem, 0); // clear any leftover semaphore
 
     err = R_I2C_MASTER_W_Write(&g_i2c_master0_ctrl, &reg, 1, true);
-    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return err; }
 
     /* Wait/block until write completes */
     if (xSemaphoreTake(g_i2c_complete_sem, pdMS_TO_TICKS(I2C_TRANSACTION_BUSY_DELAY)) != pdTRUE)
     {
         xSemaphoreGive(g_i2c_mutex);
-        return -1;
+        return err;
     }
     if (I2C_MASTER_EVENT_TX_COMPLETE != g_i2c_callback_event)
     {
         xSemaphoreGive(g_i2c_mutex);
-        return -1;
+        return err;
     }
 
     /* Read data */
@@ -301,18 +303,18 @@ int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp, uint16_t len)
     xSemaphoreTake(g_i2c_complete_sem, 0); // clear any leftover semaphore
 
     err = R_I2C_MASTER_W_Read(&g_i2c_master0_ctrl, bufp, len, false);
-    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return -1; }
+    if (err != FSP_SUCCESS) { xSemaphoreGive(g_i2c_mutex); return err; }
 
     /* Wait/block until read completes */
     if (xSemaphoreTake(g_i2c_complete_sem, pdMS_TO_TICKS(I2C_TRANSACTION_BUSY_DELAY)) != pdTRUE)
     {
         xSemaphoreGive(g_i2c_mutex);
-        return -1;
+        return err;
     }
     if (I2C_MASTER_EVENT_RX_COMPLETE != g_i2c_callback_event)
     {
         xSemaphoreGive(g_i2c_mutex);
-        return -1;
+        return err;
     }
 
     xSemaphoreGive(g_i2c_mutex);

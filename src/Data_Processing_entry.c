@@ -110,7 +110,7 @@ void Data_Processing_entry(void *pvParameters)
             if (sources.step_detector)
             {
                 err = lsm6dsv320x_stpcnt_steps_get(&dev_ctx, &step_count);
-                if (err != 0) { max30102_interface_debug_print("get step count failed\n"); while(1); }
+                if (err != 0) { APP_PRINT("get step count failed\n"); while(1); }
                 g_step_count = step_count;
                 APP_PRINT("Steps: %d\n", (int)step_count);
             }

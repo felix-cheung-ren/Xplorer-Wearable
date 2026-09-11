@@ -13,7 +13,7 @@
 
 extern stmdev_ctx_t dev_ctx;
 
-void lsm6dsv320x_interface_init(void);
+int32_t lsm6dsv320x_interface_init(void);
 
 int32_t lsm6dsv320x_stpcnt_init(void);
 
